@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewpoint" content="width=device-width" initial-scale="1.0"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-twilight.min.css">
+ </head>  
+ <body>
+   <h1>[Phần 1] Tạo dự án ReactJS với Webpack và Babel</h1>
+   <p>Chào mọi người 🤗🤗</p>
+   <p>Hôm nay mình có quay một video trong khóa học ReactJS là “Tạo dự án ReactJS với Webpack và Babel”. Mình làm video này với mong muốn chia sẻ cho các bạn có thể hình dung ra dự án được tạo bởi “create-react-app” được xây dựng như thế nào. Các bạn có thể xem thêm video hướng dẫn ở đây nhé.</p>
+   <p><b><i>Click vào hình ảnh này để mở video nhé anh em!</i></b></p>
+   <img src="http://i3.ytimg.com/vi/1EBe-l1E3pM/maxresdefault.jpg"
+        width="450"
+        height="225"
+        alt="React webpack"/>
+   <p>👉👉 Đăng ký khóa ReactJS miễn phí của mình tại:<a href="https://fullstack.edu.vn/courses/reactjs">https://fullstack.edu.vn/courses/reactjs</a></p>
+   <h2>Bắt đầu</h2>
+   <p>Nếu anh em chưa cài đặt NodeJS thì hãy xem video này trước nhé: <a href="https://www.youtube.com/watch?v=ysjJlvQ3FFc">https://www.youtube.com/watch?v=ysjJlvQ3FFc</a></p>
+   <ol>
+     <li>Cấu trúc dự án
+       <pre>
+<code class="language-html">react-webpack # thư mục gốc
+    | src # thư mục chứa source code chính
+        | components # thư mục chứa components
+        | index.js # File khởi tạo, render App vào #root
+    | public
+        | index.html # HTML page, nơi chứa #root element</code>
+</pre>
+</li>
+     <li>Khởi tạo dự án
+       <p>Trong hướng dẫn này mình sử dụng VSCode IDE. Các bạn chọn <b><i>File --> Add Folder to Workspace.</i></b>
+       </p>
+       <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153cea07e4ad.png"
+       width="450"
+       height="225"/> 
+       <p>Tiếp theo, bạn tự tạo một thư mục mới tên là react-webpack sau đó chọn thư mục đó và click vào <b><i>Add</i></b>.</p>
+       <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153cf5a3dd45.png"
+       width="450"
+       height="225"/>
+     </li>
+     <li>Mở cửa sổ Terminal
+       <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153cff03a78c.png"
+       width="450"
+       height="225"/>
+       <p>Sau đó chạy dòng lệnh sau để khởi tạo dự án với Node:</p>
+       <code class="language-html">npm init</code>
+       <p>Gõ <code class="language html">npm init</code> vào Terminal sau đó nhấn phím <code class="language html">Enter</code> để chạy dòng lệnh.</p>
+       <p>Kết quả trông như sau:</p>
+       <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153d075949da.png"
+       width="450"
+       height="225"/>
+       <p>Khi đó trong Terminal của bạn sẽ yêu cầu nhập một số thông tin để mô tả cho dự án của bạn. Bạn có thể nhập thông tin vào nếu muốn, trong hướng dẫn này mình để mặc định nên Enter hết</p>
+       <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153d1067cfd9.png"
+       width="450"
+       height="225"/>
+       <p>Sau khi khởi tạo dự án thành công bạn sẽ thấy file package.json được tạo trong thư mục dự án.</p>
+       <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153d1ac97279.png"
+       width="450"
+       height="225"/>
+       <p>
+<code class="language html">package.json</code> là file chứa thông tin dự án như: tên dự án, phiên bản, mô tả, các thư viện được sử dụng trong dự án, v.v
+       </p>
+     </li>
+     <li>
+       <h2> Cài đặt webpack</h2>
+       <p>Chạy lệnh sau để cài đặt 2 thư viện là <code class="language-html">webpack</code> và <code class="language-html">webpack-cli</code>:</p>
+       <code class="language-html">npm install webpack webpack-cli --save-dev</code>
+       <p><code class="language-html">--save-dev</code> để đánh dấu 2 thư viện này chỉ dùng trong khi phát triển, khi dự án đẩy lên production sẽ không có các thư viện này.</p>
+       <p>Sau khi lệnh trên chạy xong, <code class="language-html">webpack</code> và <code class="language-html">webpack-cli</code> sẽ được thêm vào <code class="language-html">devDependencies</code>:</p>
+       <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153d30c70fe1.png"
+       width="450"
+       height="225"/>
+       <p><code class="language-html">devDependencies</code> chứa các thư viện được cài đặt với <code class="language-html">flag --save-dev</code>.</p>
+     </li>
+     <li>
+       
+       <h2>Cài đặt React và React-DOM</h2>
+      <p>Chạy lệnh sau:</p>
+       <code class="language-html">npm install react@17.0.2 react-dom@17.0.2 --save</code>
+       <p><code class="language-html">--save</code> để thêm các thư viện được cài vào phần <code class="language-html">dependencies</code> trong <code class="language-html">package.json</code>. Đây là các thư viện được sử dụng trong dự án, bao gồm cả development & production. Từ phiên bản NPM 5 trở đi thì <code class="language-html">--save</code> được thêm vào mặc định, nếu bạn đang sử dụng NPM >= 5 thì có thể không cần <code class="language-html">--save</code> .</p>
+       <p>Sau khi cài đặt thành công:</p>
+       <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153d48aac6dc.png"
+       width="450"
+       height="225"/>
+     </li>
+     <li> 
+       
+       <h2>Cài đặt Babel</h2>
+       <p>Chạy:</p>
+       <pre><code class="language-html">npm install @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev</code></pre>
+       <p>
+         <pre><b>babel-core</b>: Chuyển đổi ES6 về ES5
+<b>babel-loader</b>: Cho phép chuyển các files Javascript sử dụng Babel & Webpack
+<b>babel-preset-env</b>: Cài đặt sẵn giúp bạn sử dụng Javascript mới nhất trên nhiều môi trường khác nhau (nhiều trình duyệt khác nhau). Gói này đơn giản là support truyển đổi ES6, ES7, ES8, ES… về ES5.
+<b>babel-preset-react</b>: Hỗ trợ chuyển đổi JSX về Javascript</pre>
+       </p>
+       <p>Sau khi cài đặt xong:</p>
+       <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153d78206359.png"
+       width="450"
+       height="225"/>
+     </li>
+     <li>
+       
+      <h2>Tạo index.html</h2>
+       <p>Tại thư mục gốc của dự án hãy tạo file <code class="language-html">public/index.html</code> và thêm vào cấu trúc HTML mặc định như sau:</p>
+       <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153de515c5c2.png"
+       width="450"
+       height="225"/>
+       <p>Thêm nhanh cấu trúc HTML mặc định với VSCode, gõ <code class="language-html">!</code> và nhấn <code class="language-html">Tab</code> .</p>
+       <p>Tiếp theo, hãy tạo <code class="language-html">#root</code> element:</p>
+       <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153e0f670e43.png"
+       width="450"
+       height="225"/>
+     </li>
+     <li>
+       
+      <h2>Tạo file index.js</h2>
+       <p>Tại thư mục gốc của dự án hãy tạo <code class="language-html">file src/index.js</code> và thêm vào nội dung sau:</p>
+       <pre><code class="language-html">import React from 'react' // nạp thư viện react
+import ReactDOM from 'react-dom' // nạp thư viện react-dom
+
+// Tạo component App
+function App() {
+    return (
+        <div>
+            <h1>Xin chào anh em F8!</h1>
+        </div>
+    )
+}
+
+// Render component App vào #root element
+ReactDOM.render(<App />, document.getElementById('root'))</code>
+</pre>
+     </li>
+   </ol>
+   
+   <h1>Cấu hình webpack</h1>
+   <ol>
+     <li>
+      <h2>Cài đặt CSS-Loader và Style-Loader</h2>
+       <p>2 thư viện này giúp webpack có thể tải file <code class="language-html">.css</code> dưới dạng module.</p>
+       <p>Chạy:</p>
+       <code class="language-html">npm install css-loader style-loader --save-dev</code>
+     </li>
+     <li>
+      <h2>Tạo webpack.config.js</h2>
+       <p>Tạo file <code class="language-html">webpack.config.js</code> tại thư mục gốc của dự án với nội dung sau:</p>
+       <pre><code class="language-html">const path = require("path");
+
+module.exports = {
+  entry: "./src/index.js", // Dẫn tới file index.js ta đã tạo
+  output: {
+    path: path.join(__dirname, "/build"), // Thư mục chứa file được build ra
+    filename: "bundle.js" // Tên file được build ra
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/, // Sẽ sử dụng babel-loader cho những file .js
+        exclude: /node_modules/, // Loại trừ thư mục node_modules
+        use: ["babel-loader"]
+      },
+      {
+        test: /\.css$/, // Sử dụng style-loader, css-loader cho file .css
+        use: ["style-loader", "css-loader"]
+      }
+    ]
+  },
+  // Chứa các plugins sẽ cài đặt trong tương lai
+  plugins: [
+  ]
+};</code>
+</pre>
+     </li>
+     <li>
+       
+      <h2>Tạo file .babelrc</h2>
+       <p>File <code class="language-html">.babelrc</code> dùng để cấu hình cho thư viện Babel.</p>
+       <p>Lưu ý tên file bắt đầu bằng dấu <code class="language-html">.</code></p>
+       <p>Tại thư mục gốc dự án tạo file <code class="language-html">.babelrc</code> và thêm nội dung sau:</p>
+       <pre><code class="language-html">{
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+    ]
+}</code></pre>
+       <p>Cài đặt này để cho Babel biết sử dụng <code class="language-html">preset-env</code> và <code class="language-html">preset-react</code> trong việc hỗ trợ chuyển đổi mã.</p>
+       <p>Đây là ảnh chụp file mình tạo, các bạn so sánh xem giống chưa nhé.</p>
+       <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153e3d726261.png"
+       width="450"
+       height="225"/>
+     </li>
+     <li>
+       
+      <h2>Thêm scripts cho dự án</h2>
+       <p>Tại <code class="language-html">package.json</code> thêm nội dung sau:</p>
+       <pre><code class="language-html">"scripts": {
+    ...
+    "start": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+}</code>
+</pre>
+       <p>Bạn làm đúng trông nó sẽ như thế này:</p>
+       <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153e4d609bcb.png"
+       width="450"
+       height="225"/>
+       <p>Cấu hình <code class="language-html">scripts</code> này để bạn có thể chạy lệnh tương ứng qua Terminal. Ví dụ: <code class="language-html">npm start</code> sẽ chạy lệnh ở phần <code class="language-html">start</code>, <code class="language-html">npm run build</code> sẽ chạy lệnh ở phần build. Trừ <code class="language-html">start</code> ra thì bạn cần thêm từ <code class="language-html">run</code> nữa nhé.</p>
+     </li>
+   </ol>
+   
+   
+   <h1>Chạy dự án</h1>
+   <p>Qua những bước trên ta đã hoàn thành các cấu hình cơ bản rồi nhé, giờ ta có thể chạy dự án lên.</p>
+   <ol>
+     <li>
+      <h2>Biên dịch code với Webpack</h2>
+       <p>Tại Ternimal hãy chạy:</p>
+       <code class="language-html">npm start</code>
+       <p>Lệnh này sẽ chạy <code class="language-html">webpack --mode development --watch</code> mà ta đã cấu hình trong <code class="language-html">package.json</code>, <code class="language-html">--watch</code> để webpack sẽ luôn lắng nghe thay đổi, khi file thay đổi webpack sẽ thực hiện biên dịch nhé.</p>
+       <p>Kết quả trông như sau anh em nhé:</p>
+       <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153e607aa5a2.png"
+       width="450"
+       height="225"/>
+     </li>
+         <ul>
+           <li><p>Có file mới được tạo ra trong <code class="language-html">build/bundle.js</code> (vì ta đã cấu hình như vậy trong <code class="lanuage-html">webpack.config.js</code>)</p> </li>
+           <li><p>Nội dung trong <code class="language-html">build/bundle.js</code> chính là code của file <code class="language-html">src/index.js</code> đã được Babel chuyển đổi, bạn có thể mở ra để quan sát.</p> </li>
+         </ul>
+     <p>Bạn sẽ thấy có rất nhiều code trong này vì nó bao gồm cả code của những thư viện chúng ta đã import như: <code class="language-html">react</code> và <code class="language-html">react-dom</code> .</p>
+     <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153e6b91f94f.png"
+     width="450"
+     height="225"/>
+     <li>
+       
+       <h2>Chạy dự án với Live Server (VSCode)</h2>
+       <p>Phần này chúng ta làm 2 việc:</p>
+       <ul>
+         <li>Thêm thẻ script link tới file <code class="language-html">build/bundle.js</code> </li>
+         <li>Chạy dự án với Live Server</li>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153e7dcc00c1.png"
+         width="450"
+         height="225"/>
+         <p>Thêm nội dung sau vào vị trí như ảnh mô tả ở trên:</p>
+         <code class="language-html">&lt;script src=&quot;../build/bundle.js&quot;&gt;&lt;/script&gt;</code>
+         <p>Sau đó chạy Live Server và đạt được kết quả như sau là bạn đã làm đúng nhé:</p>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153e8f53dc37.png"
+         width="450"
+         height="225"/>
+         <p>Tiếp theo chúng ta sẽ test xem webpack có đang lắng nghe thay đổi file không nhé (vì trong lệnh start chúng ta có sử dụng cờ <code class="language-html">--watch</code> mà).</p>
+         <p>Các bạn lưu ý không tắt Terminal đi nhé. Chạy dự án theo cách này bạn phải luôn dữ cho Ternimal chạy.</p>
+         <p>Thử đi sửa nội dung file <code class="language-html">src/index.js</code> :</p>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153ea63225f5.png"
+         width="450"
+         height="225"/>
+         <p>Nội dung website trên trình duyệt cũng thay đổi theo:</p>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153ea8c99491.png"
+         width="450"
+         height="225"/>
+         <p>Nhờ Live Server mà ta không cần F5 trang web.</p>
+         <h3>Okie, tới đây các bạn hình dung flow chạy nó như này:</h3>
+         <ol>
+           <li>Webpack khi được chạy sẽ lắng nghe thay đổi của file</li>
+           <li>Khi file thay đổi Webpack sẽ biên dịch và update vào <code class="language-html">build/bundle.js</code> </li>
+           <li>Website được chạy sẽ link file script từ <code class="language-html">build/bundle.js</code> </li>
+           <li>Live Server chạy web và lắng nghe thay đổi của <code class="language-html">build/bundle.js</code> để F5 lại trang</li>
+         </ol>
+         
+         <h2>Cài đặt html-webpack-plugin</h2>
+         <p>Tại sao phải cài thằng này làm gì? Ở phần trước các bạn có nhớ ta phải tự đi thêm thằng này vào <code class="language-html">index.html</code> không?</p>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153ebf86311b.png"
+         width="450"
+         height="225"/>
+         <p>Làm như này khá thủ công, chúng ta có thể tự động hóa nó vì rõ ràng ta đã mất công cấu hình trong Webpack rồi mà.
+</p>
+         <p>Chỗ này này:</p>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153ec4689bac.png"
+         width="450"
+         height="225"/>
+         <p>Chính vì vậy <code class="language-html">html-webpack-plugin</code> ra đời để giúp chúng ta “nhờ” <code class="language-html">Webpack</code> sau khi build ra <code class="language-html">build/bundle.js</code> thì thêm hộ chúng ta vào <code class="language-html">public/index.html</code> luôn.</p>
+         <p>Cài đặt:</p>
+         <code class="language-html">npm install html-webpack-plugin --save-dev</code>
+         <p>Nếu thấy Ternimal đang được dùng để chạy <code class="language-html">npm start</code> rồi thì bạn có 2 cách sau:</p>
+         <ul>
+           <li>Mở Teminal mới để chạy (không thoát Terminal cũ)</li>
+           <li>Đóng Terminal hiện tại (Click vào Terminal rồi nhấn <code class="language-html">Ctrl + C</code> ), chạy lệnh cài đặt, chạy lại <code class="language-html">npm start</code> </li>
+         </ul>
+      <p>Cài thành công sẽ trông như này:</p>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153ed5c6adaa.png"
+         width="450"
+         height="225"/>
+         <p>Tiếp theo ta đi update cấu hình Webpack để thêm <code class="language-html">html-webpack-plugin</code> vào dự án.</p>
+         <p>Tại <code class="language-html">webpack.config.js</code> hãy thêm:</p>
+         <pre><code class="language-html">...
+const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;);
+
+module.exports = {
+  ...
+  // Chứa các plugins sẽ cài đặt trong tương lai
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: &quot;./public/index.html&quot;
+    })
+  ]
+};</code></pre>
+         <p>Làm đúng trông sẽ như sau:</p>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153edf25bc79.png"
+         width="450"
+         height="225"/>
+         <p>Đi xóa bỏ phần khoanh đỏ khỏi file <code class="language-html">public/index.html</code>:</p>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153eedaeaae4.png"
+         width="450"
+         height="225"/>
+         <p><b><i>Nhấn</i></b> <code class="language-html">Ctrl + C</code> <b><i>tại Terminal và chạy lại lệnh</i></b> <code class="language-html">npm start</code> để thấy kết quả!</p>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153efd40fdf0.png"
+         width="450"
+         height="225"/>
+         <p>Thuộc tính <code class="language-html">defer</code> trong thẻ script để báo với trình duyệt rằng hãy thực thi code Javascript sau khi HTML đã được parse xong. Điều này giúp đặt được thẻ script trên thẻ <code class="language-html">head</code> mà code Javascript vẫn có thể truy cập được HTML DOM viết dưới <code class="language-html">body</code>.</p>
+         
+         <h1>Cài đặt webpack-dev-server</h1>
+         <p>Đây là bước cuối cùng của hướng dẫn này.</p>
+         <p>Ở phần trước chúng ta vẫn sử dụng VSCode Live Server để chạy web, trong thực tế khi ta đã cài đặt Node và sử dụng Webpack thì ta sẽ không cần dùng tới Live Server. Bản thân Node có thể start được web server (máy chủ web) rồi, giờ ta sẽ đi cài thêm <code class="language-html">webpack-dev-server</code> để có được một web server kết hợp được Webpack và Node nhé.</p>
+         <p>Chạy:</p>
+         <code class="language-html">npm install webpack-dev-server --save-dev</code>
+         <p>Sau khi cài đặt thành công:</p>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153f23fe69b0.png"
+         width="450"
+         height="225"/>
+         <p>Sửa lại cấu hình scripts trong <code class="language-html">package.json</code>:</p>
+         <pre><code class="language-html">"scripts": {
+    ...
+    "start": "webpack-dev-server --mode development --open --hot",
+    ...
+}</code></pre>
+         <p>Làm đúng trông sẽ như sau:</p>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153f1bc8dd55.png"
+         width="450"
+         height="225"/>
+         <p><b><i>Tắt bỏ Live Server, nhấn</i></b> <code class="language-html">Ctrl + C</code> <b><i>tại Terminal và chạy lại lệnh</i></b> <code class="language-html">npm start</code> để thấy kết quả!</p>
+         
+         <h1>Thành quả</h1>
+         <p>Sau khi chạy <code class="language-html">npm start</code>:</p>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153f3141edb9.png"
+         width="450"
+         height="225"/>
+         <p>Trang web tự động được mở trên trình duyệt:</p>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153f363c6e36.png"
+         width="450"
+         height="225"/>
+         <p>Thử đi sửa nội dung file <code class="language-html">src/index.js</code> xem sao?</p>
+         <img src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153f41402b51.png"
+         width="450"
+         height="225"/>
+         
+         
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+ </body> 
